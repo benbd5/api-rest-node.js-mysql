@@ -1,5 +1,5 @@
 const get_articles_page = (req, res) => {
-  res.send("liste-des-articles");
+  res.render("articles");
 };
 
 module.exports = {
