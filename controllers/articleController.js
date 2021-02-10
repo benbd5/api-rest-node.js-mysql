@@ -11,10 +11,15 @@ const get_articles_page = async (req, res) => {
   res.render("articles", { articles: listeDesArticles });
 };
 
-/* const get_one_article = async (req, res) => {
-  const listeDesArticles = await querysql("INSERT INTO article");
-  res.render("articles", { articles: listeDesArticles });
-}; */
+const get_one_article = async (req, res) => {
+  const id = req.params.id;
+  // "?" permet de sécuriser lkes requetes sql
+  const singleArticle = await query("SELECT * FROM article WHERE articleId=?", [
+    id,
+  ]);
+  res.render("singleArticle", { article: singleArticle[0] });
+  console.log(singleArticle);
+};
 
 const get_post_articles = async (req, res) => {
   res.render("post");
@@ -57,5 +62,5 @@ module.exports = {
   get_articles_page,
   post_articles,
   get_post_articles,
-  // get_one_article,
+  get_one_article,
 };
