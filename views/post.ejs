@@ -1,9 +1,10 @@
+<%- include('partials/header.ejs') %>
+
 <div class="container">
     <form action="/send" method="post" enctype="multipart/form-data">
         <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">Titre</label>
-            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com"
-                name="titre">
+            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Titre" name="titre">
         </div>
         <div class="mb-3">
             <label for="exampleFormControlTextarea1" class="form-label">Description</label>
@@ -11,13 +12,12 @@
         </div>
         <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">Auteur id</label>
-            <input type="number" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com"
-                name="auteurId">
+            <input type="number" class="form-control" id="exampleFormControlInput1" placeholder="0" name="auteurId">
         </div>
         <div class="mb-3">
             <label for="formFile" class="form-label">Image</label>
             <input class="form-control" type="file" id="formFile" name="image">
         </div>
-        <button type="submit">Envoyer</button>
+        <button type="submit" class="btn btn-primary">Envoyer</button>
     </form>
 </div>

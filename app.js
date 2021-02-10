@@ -5,6 +5,7 @@ const mysql = require("mysql");
 const util = require("util");
 const bodyParser = require("body-parser");
 const fileupload = require("express-fileupload");
+const methodOverride = require("method-override");
 
 require("dotenv").config();
 
@@ -13,6 +14,8 @@ app.use(fileupload());
 
 // Sert pour POST et PUT lors de l'envoi de données au seveur
 app.use(express.urlencoded({ extended: true }));
+
+app.use(methodOverride("_method"));
 
 // EJS
 app.set("view engine", "ejs");
@@ -47,9 +50,5 @@ const articles = require("./routes/articlesRoute");
 // Controller
 // app.use("/liste-des-articles", articles);
 app.use(articles);
-
-app.get("/", function (req, res) {
-  res.send("Hello World");
-});
 
 app.listen(3000);

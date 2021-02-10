@@ -2,10 +2,9 @@
 
 <h1 class="text-center">Les articles</h1>
 
-<% articles.forEach(article => { %>
-
 <div class="container">
     <div class="row">
+        <% articles.forEach(article => { %>
         <div class="col">
             <div class="card" style="width: 18rem;">
                 <img src="/uploads/<%= article.image %> " class="card-img-top" alt="...">
@@ -14,10 +13,13 @@
                     <p class="card-text"><%= article.description %> </p>
                     <a href="/liste-des-articles/<%= article.articleId %> " class="btn btn-primary">Lire la suite...</a>
                 </div>
+                <form action="/delete/<%= article.articleId %>?_method=DELETE" method="POST">
+                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                </form>
             </div>
         </div>
+        <% }) %>
     </div>
 </div>
-<% }) %>
 
 <%- include('partials/footer.ejs') %>
