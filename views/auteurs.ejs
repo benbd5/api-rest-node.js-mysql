@@ -18,16 +18,16 @@
                 <tbody>
                     <% auteurs.forEach(auteur => { %>
                     <tr>
-                        <th scope="row"><%= auteur.auteurID %></th>
+                        <th scope="row"><%= auteur.auteurId %></th>
                         <td><%= auteur.nom %></td>
                         <td>
-                            <a href="/liste-des-auteurs/<%= auteur.auteurID %> " class="btn btn-primary">Détails</a>
+                            <a href="/liste-des-auteurs/<%= auteur.auteurId %> " class="btn btn-primary">Détails</a>
                         </td>
                         <td>
-                            <a href="/updateAuteur/<%= auteur.auteurID %>" class="btn btn-warning">Modifier</a>
+                            <a href="/updateAuteur/<%= auteur.auteurId %>" class="btn btn-warning">Modifier</a>
                         </td>
                         <td>
-                            <form action="/delete-auteur/<%= auteur.auteurID %>?_method=DELETE" method="POST">
+                            <form action="/delete-auteur/<%= auteur.auteurId %>?_method=DELETE" method="POST">
                                 <button type="submit" class="btn btn-danger">Supprimer</button>
                             </form>
                         </td>

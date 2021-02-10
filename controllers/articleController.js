@@ -51,7 +51,6 @@ const post_articles = async (req, res) => {
     ",'" +
     req.body.description +
     "');";
-  // console.log(req.body);
 
   db.query(query, upload, (err, result) => {
     if (err) {
@@ -64,16 +63,12 @@ const post_articles = async (req, res) => {
 // Supprimer un articles
 const delete_articles = async (req, res) => {
   const id = req.params.id;
-  /* const deleteArticle = await query("DELETE FROM article WHERE articleId=?", [
-    id,
-  ]); */
-  db.query("DELETE FROM article WHERE articleId=?", [id], (err, results) => {
-    if (err) console.log(err);
-    console.log("Supprimé");
-    res.redirect("/");
-  });
+  await query("DELETE FROM article WHERE articleId=?", [id]);
+  console.log("Supprimé");
+  res.redirect("/");
 };
 
+// Affiche la page de modification des articles
 const get_update_article = async (req, res) => {
   const id = req.params.id;
   const singleArticle = await query("SELECT * FROM article WHERE articleId=?", [
@@ -81,24 +76,35 @@ const get_update_article = async (req, res) => {
   ]);
   res.render("updateArticle", { article: singleArticle[0] });
 };
+
+// Modifier les articles
 const update_article = async (req, res) => {
   const id = req.params.id;
+  const image = req.files.image;
+  const imageName = image.name;
 
-  const updateArticle = await query(
+  const fileUpload = path.resolve(
+    __dirname,
+    "..",
+    "public/uploads/",
+    imageName
+  );
+
+  const upload = image.mv(fileUpload);
+
+  await query(
     "UPDATE article SET titre = '" +
       req.body.titre +
       "', auteurId='" +
       req.body.auteurId +
       "', description='" +
       req.body.description +
+      "', image='" +
+      imageName +
       "' WHERE articleId=?",
     [id]
   );
-
-  db.query(updateArticle, (err, result) => {
-    if (err) console.log(err);
-    res.redirect("/liste-des-articles");
-  });
+  res.redirect("/liste-des-articles");
 };
 
 module.exports = {

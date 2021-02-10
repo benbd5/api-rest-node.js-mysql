@@ -1,5 +1,36 @@
 <%- include('partials/header.ejs') %>
 
-<h1 class="text-center"><%= auteur.nom %> </h1>
+<div class="container">
+    <div class="row">
+        <h1 class="text-center"><%= auteur.nom %> </h1>
+        <div class="text-center">
+            <a href="/updateAuteur/<%= auteur.auteurId %>" class="btn btn-warning">Modifier l'auteur</a>
+            <form action="/delete-auteur/<%= auteur.auteurId %>?_method=DELETE" method="POST">
+                <button type="submit" class="btn btn-danger">Supprimer l'auteur</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <% auteurArticles.forEach(article => { %>
+        <div class="col">
+            <div class="card" style="width: 18rem;">
+                <img src="/uploads/<%= article.image %> " class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title"><%= article.titre %> </h5>
+                    <p class="card-text"><%= article.description %> </p>
+                    <a href="/liste-des-articles/<%= article.articleId %> " class="btn btn-primary">Lire la suite...</a>
+                    <a href="/updateArticle/<%= article.articleId %>" class="btn btn-warning">Modifier</a>
+                    <form action="/delete/<%= article.articleId %>?_method=DELETE" method="POST">
+                        <button type="submit" class="btn btn-danger">Supprimer</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <% }) %>
+    </div>
+</div>
 
 <%- include('partials/footer.ejs') %>

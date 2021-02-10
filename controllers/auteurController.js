@@ -1,20 +1,31 @@
+// Affiche la liste des auteurs
 const get_auteur_page = async (req, res) => {
   const listeDesAuteurs = await query("SELECT * FROM auteur");
   res.render("auteurs", { auteurs: listeDesAuteurs });
 };
 
+// Afficher un seul auteur avec son id
 const get_one_auteur = async (req, res) => {
   const id = req.params.id;
-  const singleAuteur = await query("SELECT * FROM auteur WHERE auteurID=?", [
+  const singleAuteur = await query("SELECT * FROM auteur WHERE auteurId=?", [
     id,
   ]);
-  res.render("singleAuteur", { auteur: singleAuteur[0] });
+
+  // Jointure pour afficher les articles correspondants à l'auteur
+  const auteurArticles = await query(
+    "SELECT articleId,titre,image,description,auteur.auteurId FROM auteur INNER JOIN article ON auteur.auteurId= article.auteurId WHERE article.auteurId=?",
+    [id]
+  );
+
+  res.render("singleAuteur", { auteur: singleAuteur[0], auteurArticles });
 };
 
+// Aficher la page d'ajout des auteurs
 const get_add_auteur = (req, res) => {
   res.render("addAuteur");
 };
 
+// Ajouter un auteur
 const post_add_auteur = (req, res) => {
   const addAuteur = "INSERT INTO auteur (nom) VALUES ('" + req.body.nom + "');";
 
@@ -27,9 +38,10 @@ const post_add_auteur = (req, res) => {
   });
 };
 
+// Supprimer un auteur
 const delete_auteur = async (req, res) => {
   const id = req.params.id;
-  const deleteAuteur = await query("DELETE FROM auteur WHERE auteurID=?", [id]);
+  const deleteAuteur = await query("DELETE FROM auteur WHERE auteurId=?", [id]);
   db.query(deleteAuteur, (err, result) => {
     if (err) console.log(err);
     console.log("Auteur supprimé");
@@ -37,27 +49,24 @@ const delete_auteur = async (req, res) => {
   });
 };
 
+// Afficher la page de modification pour les auteurs
 const get_update_auteur = async (req, res) => {
   const id = req.params.id;
-  const singleAuteur = await query("SELECT * FROM auteur WHERE auteurID=?", [
+  const singleAuteur = await query("SELECT * FROM auteur WHERE auteurId=?", [
     id,
   ]);
   res.render("updateAuteur", { auteur: singleAuteur[0] });
 };
 
+// Modifier un auteur
 const update_auteur = async (req, res) => {
   const id = req.params.id;
 
-  const updateAuteur = await query(
-    "UPDATE auteur SET nom = '" + req.body.nom + "' WHERE auteurID=?",
+  await query(
+    "UPDATE auteur SET nom = '" + req.body.nom + "' WHERE auteurId=?",
     [id]
   );
-
-  db.query(updateAuteur, (err, result) => {
-    if (err) console.log(err);
-
-    res.redirect("/liste-des-auteurs");
-  });
+  res.redirect("/liste-des-auteurs");
 };
 
 module.exports = {
