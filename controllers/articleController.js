@@ -74,10 +74,39 @@ const delete_articles = async (req, res) => {
   });
 };
 
+const get_update_article = async (req, res) => {
+  const id = req.params.id;
+  const singleArticle = await query("SELECT * FROM article WHERE articleId=?", [
+    id,
+  ]);
+  res.render("updateArticle", { article: singleArticle[0] });
+};
+const update_article = async (req, res) => {
+  const id = req.params.id;
+
+  const updateArticle = await query(
+    "UPDATE article SET titre = '" +
+      req.body.titre +
+      "', auteurId='" +
+      req.body.auteurId +
+      "', description='" +
+      req.body.description +
+      "' WHERE articleId=?",
+    [id]
+  );
+
+  db.query(updateArticle, (err, result) => {
+    if (err) console.log(err);
+    res.redirect("/liste-des-articles");
+  });
+};
+
 module.exports = {
   get_articles_page,
   post_articles,
   get_post_articles,
   get_one_article,
   delete_articles,
+  get_update_article,
+  update_article,
 };

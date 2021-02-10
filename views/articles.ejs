@@ -12,6 +12,7 @@
                     <h5 class="card-title"><%= article.titre %> </h5>
                     <p class="card-text"><%= article.description %> </p>
                     <a href="/liste-des-articles/<%= article.articleId %> " class="btn btn-primary">Lire la suite...</a>
+                    <a href="/updateArticle/<%= article.articleId %>" class="btn btn-warning">Modifier</a>
                 </div>
                 <form action="/delete/<%= article.articleId %>?_method=DELETE" method="POST">
                     <button type="submit" class="btn btn-danger">Supprimer</button>

@@ -11,5 +11,7 @@ router.get("/add-article", articleController.get_post_articles);
 router.get("/liste-des-articles/:id", articleController.get_one_article);
 router.post("/send", articleController.post_articles);
 router.delete("/delete/:id", articleController.delete_articles);
+router.get("/updateArticle/:id", articleController.get_update_article);
+router.put("/update-article/:id", articleController.update_article);
 
 module.exports = router;

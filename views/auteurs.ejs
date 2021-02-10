@@ -11,6 +11,7 @@
                         <th scope="col">ID</th>
                         <th scope="col">Nom</th>
                         <th scope="col">Détails</th>
+                        <th scope="col">Modifier</th>
                         <th scope="col">Supprimer</th>
                     </tr>
                 </thead>
@@ -21,6 +22,9 @@
                         <td><%= auteur.nom %></td>
                         <td>
                             <a href="/liste-des-auteurs/<%= auteur.auteurID %> " class="btn btn-primary">Détails</a>
+                        </td>
+                        <td>
+                            <a href="/updateAuteur/<%= auteur.auteurID %>" class="btn btn-warning">Modifier</a>
                         </td>
                         <td>
                             <form action="/delete-auteur/<%= auteur.auteurID %>?_method=DELETE" method="POST">

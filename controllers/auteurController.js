@@ -37,10 +37,35 @@ const delete_auteur = async (req, res) => {
   });
 };
 
+const get_update_auteur = async (req, res) => {
+  const id = req.params.id;
+  const singleAuteur = await query("SELECT * FROM auteur WHERE auteurID=?", [
+    id,
+  ]);
+  res.render("updateAuteur", { auteur: singleAuteur[0] });
+};
+
+const update_auteur = async (req, res) => {
+  const id = req.params.id;
+
+  const updateAuteur = await query(
+    "UPDATE auteur SET nom = '" + req.body.nom + "' WHERE auteurID=?",
+    [id]
+  );
+
+  db.query(updateAuteur, (err, result) => {
+    if (err) console.log(err);
+
+    res.redirect("/liste-des-auteurs");
+  });
+};
+
 module.exports = {
   get_auteur_page,
   get_one_auteur,
   get_add_auteur,
   post_add_auteur,
   delete_auteur,
+  get_update_auteur,
+  update_auteur,
 };
