@@ -1,0 +1,11 @@
+<%- include('partials/header.ejs') %>
+
+<div class="container">
+    <form action="/send-auteur" method="post">
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Nom</label>
+            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Nom" name="nom">
+        </div>
+        <button type="submit" class="btn btn-primary">Envoyer</button>
+    </form>
+</div>

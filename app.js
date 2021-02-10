@@ -46,9 +46,11 @@ global.query = query;
 
 // Routes
 const articles = require("./routes/articlesRoute");
+const auteurs = require("./routes/auteursRoute");
 
 // Controller
 // app.use("/liste-des-articles", articles);
 app.use(articles);
+app.use(auteurs);
 
 app.listen(3000);

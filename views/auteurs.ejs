@@ -1,0 +1,39 @@
+<%- include('partials/header.ejs') %>
+
+<h1 class="text-center">Les auteurs</h1>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Nom</th>
+                        <th scope="col">Détails</th>
+                        <th scope="col">Supprimer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% auteurs.forEach(auteur => { %>
+                    <tr>
+                        <th scope="row"><%= auteur.auteurID %></th>
+                        <td><%= auteur.nom %></td>
+                        <td>
+                            <a href="/liste-des-auteurs/<%= auteur.auteurID %> " class="btn btn-primary">Détails</a>
+                        </td>
+                        <td>
+                            <form action="/delete-auteur/<%= auteur.auteurID %>?_method=DELETE" method="POST">
+                                <button type="submit" class="btn btn-danger">Supprimer</button>
+                            </form>
+                        </td>
+                    </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</div>
+
+<%- include('partials/footer.ejs') %>
