@@ -8,18 +8,32 @@ app.use(fileupload());
 
 // Page pour tous les articles
 const get_articles_page = async (req, res) => {
-  const listeDesArticles = await query("SELECT * FROM article");
-  res.render("articles", { articles: listeDesArticles });
+  const totalArticles = await query("SELECT COUNT(*) AS 'Total' FROM article");
+
+  // La jointure permet d'afficher les noms des auteurs liés sur les articles
+  const listeDesArticles = await query(
+    "SELECT auteur.nom, titre, image, description, auteur.auteurId FROM auteur INNER JOIN article ON auteur.auteurId= article.auteurId "
+  );
+
+  res.render("articles", {
+    articles: listeDesArticles,
+    totalArticles: totalArticles[0].Total, // Total = alias (AS) de la requete
+  });
 };
 
 // Page pour un seul article
 const get_one_article = async (req, res) => {
   const id = req.params.id;
-  // "?" permet de sécuriser lkes requetes sql
-  const singleArticle = await query("SELECT * FROM article WHERE articleId=?", [
-    id,
-  ]);
-  res.render("singleArticle", { article: singleArticle[0] });
+
+  // "?" permet de sécuriser les requetes sql
+  const singleArticle = await query(
+    "SELECT auteur.nom, titre, image, description, auteur.auteurId FROM auteur INNER JOIN article ON auteur.auteurId= article.auteurId WHERE articleId=?",
+    [id]
+  );
+
+  res.render("singleArticle", {
+    article: singleArticle[0],
+  });
 };
 
 // Page posts

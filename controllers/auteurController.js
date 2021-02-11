@@ -1,23 +1,19 @@
 // Affiche la liste des auteurs
 const get_auteur_page = async (req, res) => {
   const listeDesAuteurs = await query("SELECT * FROM auteur");
+
   res.render("auteurs", { auteurs: listeDesAuteurs });
 };
 
 // Afficher un seul auteur avec son id
 const get_one_auteur = async (req, res) => {
   const id = req.params.id;
-  const singleAuteur = await query("SELECT * FROM auteur WHERE auteurId=?", [
-    id,
-  ]);
-
-  // Jointure pour afficher les articles correspondants à l'auteur
-  const auteurArticles = await query(
-    "SELECT articleId,titre,image,description,auteur.auteurId FROM auteur INNER JOIN article ON auteur.auteurId= article.auteurId WHERE article.auteurId=?",
+  const singleAuteur = await query(
+    "SELECT auteur.nom, titre, image, description, auteur.auteurId, article.articleId FROM auteur INNER JOIN article ON auteur.auteurId= article.auteurId WHERE auteur.auteurId=?",
     [id]
   );
 
-  res.render("singleAuteur", { auteur: singleAuteur[0], auteurArticles });
+  res.render("singleAuteur", { auteur: singleAuteur });
 };
 
 // Aficher la page d'ajout des auteurs

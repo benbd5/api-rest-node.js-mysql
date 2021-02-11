@@ -2,6 +2,8 @@
 
 <h1 class="text-center">Les articles</h1>
 
+<h2><%= totalArticles %> articles </h2>
+
 <div class="container">
     <div class="row">
         <% articles.forEach(article => { %>
@@ -10,8 +12,9 @@
                 <img src="/uploads/<%= article.image %> " class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title"><%= article.titre %> </h5>
+                    <a href="/liste-des-auteurs/<%= article.auteurId %>"><%= article.nom %> </a>
                     <p class="card-text"><%= article.description %> </p>
-                    <a href="/liste-des-articles/<%= article.articleId %> " class="btn btn-primary">Lire la suite...</a>
+                    <a href="/liste-des-articles/<%= article.auteurId %> " class="btn btn-primary">Lire la suite...</a>
                     <a href="/updateArticle/<%= article.articleId %>" class="btn btn-warning">Modifier</a>
                 </div>
                 <form action="/delete/<%= article.articleId %>?_method=DELETE" method="POST">

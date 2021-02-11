@@ -2,10 +2,10 @@
 
 <div class="container">
     <div class="row">
-        <h1 class="text-center"><%= auteur.nom %> </h1>
+        <h1 class="text-center"><%= auteur[0].nom %> </h1>
         <div class="text-center">
-            <a href="/updateAuteur/<%= auteur.auteurId %>" class="btn btn-warning">Modifier l'auteur</a>
-            <form action="/delete-auteur/<%= auteur.auteurId %>?_method=DELETE" method="POST">
+            <a href="/updateAuteur/<%= auteur[0].auteurId %>" class="btn btn-warning">Modifier l'auteur</a>
+            <form action="/delete-auteur/<%= auteur[0].auteurId %>?_method=DELETE" method="POST">
                 <button type="submit" class="btn btn-danger">Supprimer l'auteur</button>
             </form>
         </div>
@@ -14,7 +14,7 @@
 
 <div class="container">
     <div class="row">
-        <% auteurArticles.forEach(article => { %>
+        <% auteur.forEach(article => { %>
         <div class="col">
             <div class="card" style="width: 18rem;">
                 <img src="/uploads/<%= article.image %> " class="card-img-top" alt="...">
