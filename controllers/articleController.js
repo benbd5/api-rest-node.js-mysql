@@ -38,7 +38,8 @@ const get_one_article = async (req, res) => {
 
 // Page posts
 const get_post_articles = async (req, res) => {
-  res.render("post");
+  const listeDesAuteurs = await query("SELECT * FROM auteur");
+  res.render("post", { listeDesAuteurs });
 };
 
 // Poster les articles
@@ -55,23 +56,22 @@ const post_articles = async (req, res) => {
 
   const upload = image.mv(fileUpload);
 
-  const query =
-    "INSERT INTO article (titre,image,auteurId,description) VALUES ('" +
-    req.body.titre +
-    "', '" +
-    imageName +
-    "', " +
-    req.body.auteurId +
-    ",'" +
-    req.body.description +
-    "');";
-
-  db.query(query, upload, (err, result) => {
-    if (err) {
-      return res.send(err);
-    }
+  try {
+    await query(
+      "INSERT INTO article (titre,image,auteurId,description) VALUES ('" +
+        req.body.titre +
+        "', '" +
+        imageName +
+        "', " +
+        req.body.auteurId +
+        ",'" +
+        req.body.description +
+        "');"
+    );
     res.redirect("/");
-  });
+  } catch (error) {
+    return res.send(error);
+  }
 };
 
 // Supprimer un articles
