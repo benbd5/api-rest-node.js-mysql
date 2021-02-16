@@ -24,4 +24,13 @@ VALUES ('neige','neige.jpg',4,'La neige');
 
 SELECT * FROM article;
 
+SELECT COUNT(*) FROM article;
 
+SELECT auteur.nom,titre 
+FROM article
+INNER JOIN auteur ON article.auteurId = auteur.auteurId;
+
+SELECT auteur.nom,articleId,titre,image,description,auteur.auteurId
+FROM auteur
+INNER JOIN article ON auteur.auteurId= article.auteurId;
+-- WHERE article.auteurId=1;
